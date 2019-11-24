@@ -58,15 +58,24 @@ def argument_parser():
     return parser
 
 
-def main(args=None):
-    parser = argument_parser()
-    options, remaining = parser.parse_known_args(args)
-    output   = options.output
-    tz_name  = options.timezone
-    period   = options.period
-    grid     = options.grid
-    title    = options.title
-    width    = options.width or 10
+def main(args=None, options=None):
+    if not options:
+        parser = argument_parser()
+        options, remaining = parser.parse_known_args(args)
+        output   = options.output
+        tz_name  = options.timezone
+        period   = options.period
+        grid     = options.grid
+        title    = options.title
+        width    = options.width or 10
+    else:
+        remaining = options["remaining"]
+        output   = options["output"]
+        tz_name  = None
+        period   = options["period"]
+        grid     = options["grid"]
+        title    = options["title"]
+        width    = options["width"] or 10
 
     # Detect passed input files/folders versus git options, note that if you
     # have weirdly named files in your local directory, you must pass '--' to
